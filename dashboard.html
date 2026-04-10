@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>工作台 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.welcome-banner{background:linear-gradient(135deg,rgba(0,137,255,.2),rgba(0,198,255,.1));border:1px solid rgba(0,137,255,.3);border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.welcome-text h2{font-size:20px;color:#fff;font-weight:700}
+.welcome-text p{font-size:13px;color:#7ab3cc;margin-top:4px}
+.welcome-stats{display:flex;gap:24px}
+.ws{text-align:center}.ws-num{font-size:24px;font-weight:700;color:#0089ff}.ws-label{font-size:11px;color:#6a9ab8}
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.qa-btn{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:.3s}
+.qa-btn:hover{border-color:#0089ff;background:rgba(0,137,255,.1);transform:translateY(-2px)}
+.qa-icon{font-size:24px;margin-bottom:8px}
+.qa-label{font-size:12px;color:#7ab3cc}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.activity-list{padding:0 4px}
+.activity-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.activity-content{flex:1}
+.activity-title{font-size:13px;color:#c0d8e8}
+.activity-time{font-size:11px;color:#4a7fa5;margin-top:2px}
+.todo-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer}
+.todo-item:hover{background:rgba(0,137,255,.06)}
+.todo-check{width:18px;height:18px;border:2px solid rgba(0,137,255,.4);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#0089ff}
+.todo-text{flex:1;font-size:13px;color:#c0d8e8}
+.todo-due{font-size:11px;color:#ff6b7a}
+@media(max-width:768px){.quick-actions{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.welcome-stats{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">🏗️</div>
+      <div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item active"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item"><span class="icon">📋</span>项目管理<span class="nav-badge">8</span></a>
+      <a href="finance.html" class="nav-item"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item"><span class="icon">✅</span>OA审批<span class="nav-badge">3</span></a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item"><span class="icon">🤖</span>AI助手</a>
+      <div class="nav-section">系统</div>
+      <a href="index.html" class="nav-item"><span class="icon">⚙️</span>退出登录</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info"><div class="avatar">杨</div><div><div class="user-name">杨玉霞</div><div class="user-role">项目经理</div></div></div>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">工作台</div>
+      <div class="topbar-right">
+        <div class="topbar-btn">🔔 消息(3)</div>
+        <div class="topbar-btn primary" onclick="location.href='projects.html'">+ 新建项目</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="welcome-banner">
+        <div class="welcome-text"><h2>早上好，杨玉霞 👋</h2><p>今日 2026-04-10 | 本月已完成 5 个项目，继续加油！</p></div>
+        <div class="welcome-stats">
+          <div class="ws"><div class="ws-num">8</div><div class="ws-label">进行中</div></div>
+          <div class="ws"><div class="ws-num">3</div><div class="ws-label">待审批</div></div>
+          <div class="ws"><div class="ws-num">2</div><div class="ws-label">逾期预警</div></div>
+        </div>
+      </div>
+      <div class="quick-actions">
+        <div class="qa-btn" onclick="location.href='projects.html'"><div class="qa-icon">📋</div><div class="qa-label">新建项目</div></div>
+        <div class="qa-btn" onclick="location.href='oa.html'"><div class="qa-icon">📝</div><div class="qa-label">发起审批</div></div>
+        <div class="qa-btn" onclick="location.href='finance.html'"><div class="qa-icon">💸</div><div class="qa-label">费用报销</div></div>
+        <div class="qa-btn" onclick="location.href='ai.html'"><div class="qa-icon">🤖</div><div class="qa-label">AI助手</div></div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card" onclick="location.href='projects.html'"><div class="stat-icon">📋</div><div class="stat-label">本月新增项目</div><div class="stat-value">12<span class="stat-unit"> 个</span></div><div class="stat-trend trend-up">▲ 较上月 +3</div></div>
+        <div class="stat-card" onclick="location.href='finance.html'"><div class="stat-icon">💰</div><div class="stat-label">本月合同金额</div><div class="stat-value">386<span class="stat-unit"> 万</span></div><div class="stat-trend trend-up">▲ 较上月 +12%</div></div>
+        <div class="stat-card"><div class="stat-icon">📥</div><div class="stat-label">本月已收款</div><div class="stat-value">218<span class="stat-unit"> 万</span></div><div class="stat-trend trend-flat">— 回款率 56%</div></div>
+        <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-label">质保金待回收</div><div class="stat-value">47<span class="stat-unit"> 万</span></div><div class="stat-trend trend-down">▼ 3 笔逾期</div></div>
+      </div>
+      <div class="two-col">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">📌 最新动态</div></div>
+          <div class="activity-list">
+            <div class="activity-item"><div class="activity-dot" style="background:#0089ff"></div><div class="activity-content"><div class="activity-title">【肯德基龙华店】进度更新：主体施工完成80%</div><div class="activity-time">10分钟前 · 张伟</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:#00d68f"></div><div class="activity-content"><div class="activity-title">【瑞幸咖啡福田店】合同已签署，等待开工</div><div class="activity-time">1小时前 · 系统</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:#ffbe00"></div><div class="activity-content"><div class="activity-title">费用报销申请待审批：李明提交 ¥12,800</div><div class="activity-time">2小时前 · 李明</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:#ff4757"></div><div class="activity-content"><div class="activity-title">【万象城公区维修】质保金逾期提醒 ¥68,000</div><div class="activity-time">今天 09:00 · 系统</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:#0089ff"></div><div class="activity-content"><div class="activity-title">【麦当劳南山店】收款确认 ¥185,000</div><div class="activity-time">昨天 16:30 · 财务</div></div></div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">📋 我的待办</div></div>
+          <div class="todo-item" onclick="location.href='oa.html'"><div class="todo-check">✓</div><div class="todo-text">审批：龙华肯德基材料采购申请</div><div class="todo-due">今天</div></div>
+          <div class="todo-item"><div class="todo-check"></div><div class="todo-text">跟进：福田瑞幸开工前现场勘察</div><div class="todo-due">明天</div></div>
+          <div class="todo-item"><div class="todo-check"></div><div class="todo-text">提交：万象城本月进度报告</div><div class="todo-due">04-12</div></div>
+          <div class="todo-item"><div class="todo-check"></div><div class="todo-text">催收：宝安麦当劳尾款 ¥42,000</div><div class="todo-due" style="color:#ffbe00">04-15</div></div>
+          <div class="todo-item"><div class="todo-check"></div><div class="todo-text">签署：南山新项目合同（客户确认中）</div><div class="todo-due">04-18</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

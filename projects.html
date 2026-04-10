@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>项目管理 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.filter-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-tab{padding:6px 16px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid rgba(0,137,255,.2);color:#6a9ab8;transition:.2s}
+.filter-tab.active,.filter-tab:hover{background:rgba(0,137,255,.2);color:#fff;border-color:#0089ff}
+.search-input{flex:1;max-width:260px;background:rgba(0,137,255,.06);border:1px solid rgba(0,137,255,.2);border-radius:8px;padding:7px 14px;color:#fff;font-size:13px;outline:none}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+.project-card{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:14px;padding:20px;cursor:pointer;transition:.3s}
+.project-card:hover{border-color:#0089ff;transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,137,255,.2)}
+.pc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.pc-title{font-size:15px;font-weight:600;color:#fff;line-height:1.4}
+.pc-client{font-size:12px;color:#4a7fa5;margin-top:4px}
+.pc-body{margin-bottom:14px}
+.pc-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px}
+.pc-key{color:#4a7fa5}.pc-val{color:#b0cce0;font-weight:600}
+.pc-progress-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.pc-footer{display:flex;gap:8px;flex-wrap:wrap}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:#0a1628;border:1px solid rgba(0,137,255,.3);border-radius:16px;width:90%;max-width:640px;max-height:85vh;overflow-y:auto}
+.modal-header{padding:20px 24px;border-bottom:1px solid rgba(0,137,255,.1);display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-size:17px;font-weight:700;color:#fff}
+.modal-close{cursor:pointer;color:#4a7fa5;font-size:20px;line-height:1}
+.modal-body{padding:24px}
+.detail-section{margin-bottom:20px}
+.detail-section-title{font-size:13px;color:#0089ff;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid rgba(0,137,255,.1);font-weight:600}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail-item .key{font-size:12px;color:#4a7fa5;margin-bottom:3px}
+.detail-item .val{font-size:14px;color:#c0d8e8;font-weight:600}
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:rgba(0,137,255,.2)}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-dot{position:absolute;left:-17px;top:4px;width:10px;height:10px;border-radius:50%;background:#0089ff;border:2px solid #0a1628}
+.tl-dot.done{background:#00d68f}
+.tl-dot.pending{background:#3a5070}
+.tl-title{font-size:13px;color:#c0d8e8;font-weight:600}
+.tl-time{font-size:11px;color:#4a7fa5;margin-top:2px}
+.action-bar{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.action-btn{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,137,255,.3);background:rgba(0,137,255,.1);color:#7ab3cc;font-size:13px;cursor:pointer;text-align:center;transition:.2s;min-width:100px}
+.action-btn:hover{background:rgba(0,137,255,.25);color:#fff}
+.action-btn.primary{background:linear-gradient(135deg,#0089ff,#0066cc);border-color:transparent;color:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🏗️</div><div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item active"><span class="icon">📋</span>项目管理<span class="nav-badge">8</span></a>
+      <a href="finance.html" class="nav-item"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item"><span class="icon">✅</span>OA审批<span class="nav-badge">3</span></a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item"><span class="icon">🤖</span>AI助手</a>
+    </nav>
+    <div class="sidebar-footer"><div class="user-info"><div class="avatar">杨</div><div><div class="user-name">杨玉霞</div><div class="user-role">项目经理</div></div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">项目管理</div>
+      <div class="topbar-right">
+        <div class="topbar-btn primary" onclick="showNewProject()">+ 新建项目</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">进行中</div><div class="stat-value">8<span class="stat-unit"> 个</span></div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">本月完工</div><div class="stat-value">5<span class="stat-unit"> 个</span></div></div>
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">合同总额</div><div class="stat-value">1,248<span class="stat-unit"> 万</span></div></div>
+        <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-label">逾期预警</div><div class="stat-value">2<span class="stat-unit"> 个</span></div></div>
+      </div>
+      <div class="filter-bar">
+        <div class="filter-tab active" onclick="filterProjects(this,'all')">全部(13)</div>
+        <div class="filter-tab" onclick="filterProjects(this,'active')">进行中(8)</div>
+        <div class="filter-tab" onclick="filterProjects(this,'done')">已完工(5)</div>
+        <div class="filter-tab" onclick="filterProjects(this,'warn')">预警(2)</div>
+        <input class="search-input" placeholder="🔍 搜索项目名称/客户..." oninput="searchProjects(this.value)">
+      </div>
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </div>
+</div>
+<!-- 项目详情弹窗 -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title" id="modalTitle">项目详情</div><div class="modal-close" onclick="closeModal()">✕</div></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<script>
+const projects=[
+  {id:1,name:'肯德基龙华新区店装修',client:'肯德基（中国）餐饮有限公司',type:'餐饮连锁装修',status:'active',amount:38.5,paid:23,progress:80,pm:'张伟',start:'2026-02-15',end:'2026-04-20',desc:'龙华新区商业广场B1层，面积约280㎡，标准餐饮门店装修'},
+  {id:2,name:'瑞幸咖啡福田CBD店',client:'瑞幸咖啡（中国）有限公司',type:'餐饮连锁装修',status:'active',amount:18.2,paid:9.1,progress:35,pm:'李明',start:'2026-03-20',end:'2026-05-10',desc:'福田CBD核心区写字楼底商，面积约120㎡'},
+  {id:3,name:'万象城公区维修改造',client:'华润万象生活',type:'公区维修',status:'active',amount:56.8,paid:28.4,progress:60,pm:'杨玉霞',start:'2026-01-10',end:'2026-04-30',desc:'万象城一期公共区域翻新，含走廊、卫生间、天花板更换'},
+  {id:4,name:'麦当劳宝安中心店',client:'麦当劳（中国）有限公司',type:'餐饮连锁装修',status:'done',amount:42.0,paid:42.0,progress:100,pm:'张伟',start:'2025-11-01',end:'2026-01-20',desc:'宝安中心区商场3F，面积约320㎡，已完工验收'},
+  {id:5,name:'星巴克南山海岸城店',client:'星巴克咖啡（中国）有限公司',type:'餐饮连锁装修',status:'active',amount:25.6,paid:12.8,progress:50,pm:'李明',start:'2026-03-01',end:'2026-05-15',desc:'南山海岸城1F临街门店，面积约160㎡'},
+  {id:6,name:'龙华万达广场公区维修',client:'万达商业管理有限公司',type:'公区维修',status:'warn',amount:88.0,paid:22.0,progress:25,pm:'杨玉霞',start:'2026-03-15',end:'2026-04-15',desc:'工期延误预警：施工队人员不足，需协调增援'},
+  {id:7,name:'汉堡王光明新区店',client:'汉堡王（中国）有限公司',type:'餐饮连锁装修',status:'active',amount:31.5,paid:15.75,progress:65,pm:'张伟',start:'2026-02-28',end:'2026-04-25',desc:'光明新区购物中心F1，面积约240㎡'},
+  {id:8,name:'深圳北站综合体公区',client:'深圳地铁集团',type:'公区维修',status:'warn',amount:120.0,paid:36.0,progress:30,pm:'杨玉霞',start:'2026-03-01',end:'2026-04-30',desc:'付款逾期预警：第二期款项 ¥300,000 已逾期15天'}
+];
+function renderProjects(list){
+  const grid=document.getElementById('projectGrid');
+  grid.innerHTML=list.map(p=>`
+    <div class="project-card" onclick="showDetail(${p.id})">
+      <div class="pc-header">
+        <div><div class="pc-title">${p.name}</div><div class="pc-client">👤 ${p.client}</div></div>
+        <span class="tag ${p.status==='done'?'tag-green':p.status==='warn'?'tag-red':'tag-blue'}">${p.status==='done'?'已完工':p.status==='warn'?'⚠️预警':'进行中'}</span>
+      </div>
+      <div class="pc-body">
+        <div class="pc-row"><span class="pc-key">合同金额</span><span class="pc-val" style="color:#0089ff">¥${p.amount}万</span></div>
+        <div class="pc-row"><span class="pc-key">已收款</span><span class="pc-val">¥${p.paid}万</span></div>
+        <div class="pc-row"><span class="pc-key">负责人</span><span class="pc-val">${p.pm}</span></div>
+        <div class="pc-row"><span class="pc-key">工期</span><span class="pc-val">${p.start} ~ ${p.end}</span></div>
+        <div class="pc-progress-label"><span style="font-size:12px;color:#4a7fa5">施工进度</span><span style="font-size:12px;color:#fff;font-weight:700">${p.progress}%</span></div>
+        <div class="progress"><div class="progress-bar" style="width:${p.progress}%;background:${p.status==='warn'?'linear-gradient(90deg,#ff4757,#ff6b7a)':p.status==='done'?'linear-gradient(90deg,#00d68f,#00b894)':'linear-gradient(90deg,#0089ff,#00c6ff)'}"></div></div>
+      </div>
+      <div class="pc-footer">
+        <span class="tag tag-gray">${p.type}</span>
+        ${p.status==='warn'?'<span class="tag tag-red">需关注</span>':''}
+        ${p.progress===100?'<span class="tag tag-green">待回款</span>':''}
+      </div>
+    </div>`).join('');
+}
+function showDetail(id){
+  const p=projects.find(x=>x.id===id);
+  document.getElementById('modalTitle').textContent=p.name;
+  const stages=[{n:'合同签署',done:true,t:p.start},{n:'进场施工',done:p.progress>0,t:p.start},{n:'主体完工',done:p.progress>=80,t:''},{n:'验收交付',done:p.progress===100,t:p.progress===100?p.end:''},{n:'尾款回收',done:p.paid>=p.amount,t:''}];
+  document.getElementById('modalBody').innerHTML=`
+    <div class="detail-section">
+      <div class="detail-section-title">📌 基本信息</div>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="key">客户名称</div><div class="val">${p.client}</div></div>
+        <div class="detail-item"><div class="key">项目类型</div><div class="val">${p.type}</div></div>
+        <div class="detail-item"><div class="key">合同金额</div><div class="val" style="color:#0089ff">¥${p.amount}万</div></div>
+        <div class="detail-item"><div class="key">已收款</div><div class="val" style="color:#00d68f">¥${p.paid}万</div></div>
+        <div class="detail-item"><div class="key">待收款</div><div class="val" style="color:#ffbe00">¥${(p.amount-p.paid).toFixed(1)}万</div></div>
+        <div class="detail-item"><div class="key">负责人</div><div class="val">${p.pm}</div></div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:#7ab3cc;background:rgba(0,137,255,.06);padding:10px 14px;border-radius:8px">${p.desc}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">📈 施工进度</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span style="color:#7ab3cc">当前进度</span><span style="color:#fff;font-weight:700">${p.progress}%</span></div>
+      <div class="progress" style="height:10px"><div class="progress-bar" style="width:${p.progress}%"></div></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">🗓️ 项目里程碑</div>
+      <div class="timeline">${stages.map(s=>`<div class="tl-item"><div class="tl-dot ${s.done?'done':'pending'}"></div><div class="tl-title">${s.done?'✅':'⏳'} ${s.n}</div>${s.t?`<div class="tl-time">${s.t}</div>`:''}</div>`).join('')}</div>
+    </div>
+    <div class="action-bar">
+      <div class="action-btn" onclick="closeModal();location.href='finance.html'">💰 收款记录</div>
+      <div class="action-btn" onclick="closeModal();location.href='oa.html'">📝 发起审批</div>
+      <div class="action-btn primary" onclick="alert('进度已更新！')">📤 更新进度</div>
+    </div>`;
+  document.getElementById('detailModal').classList.add('show');
+}
+function closeModal(){document.getElementById('detailModal').classList.remove('show')}
+function filterProjects(el,type){document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderProjects(type==='all'?projects:type==='active'?projects.filter(p=>p.status==='active'):type==='done'?projects.filter(p=>p.status==='done'):projects.filter(p=>p.status==='warn'))}
+function searchProjects(q){renderProjects(projects.filter(p=>p.name.includes(q)||p.client.includes(q)))}
+function showNewProject(){alert('新建项目功能：请填写项目名称、客户、合同金额、工期等信息')}
+document.getElementById('detailModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+renderProjects(projects);
+</script>
+</body>
+</html>

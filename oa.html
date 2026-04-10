@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>OA审批 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.approval-types{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.at-card{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:.3s}
+.at-card:hover{border-color:#0089ff;background:rgba(0,137,255,.1)}
+.at-icon{font-size:28px;margin-bottom:8px}
+.at-label{font-size:13px;color:#7ab3cc}
+.approval-item{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.12);border-radius:12px;padding:16px 20px;margin-bottom:12px;cursor:pointer;transition:.3s}
+.approval-item:hover{border-color:rgba(0,137,255,.4);background:rgba(0,137,255,.06)}
+.ai-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ai-title{font-size:15px;color:#fff;font-weight:600}
+.ai-meta{display:flex;gap:16px;font-size:12px;color:#4a7fa5}
+.ai-meta span{display:flex;align-items:center;gap:4px}
+.ai-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.approve-btns{display:flex;gap:8px}
+.btn-approve{background:rgba(0,214,143,.15);border:1px solid rgba(0,214,143,.3);color:#00d68f;padding:6px 16px;border-radius:6px;font-size:13px;cursor:pointer;transition:.2s}
+.btn-approve:hover{background:rgba(0,214,143,.3)}
+.btn-reject{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757;padding:6px 16px;border-radius:6px;font-size:13px;cursor:pointer;transition:.2s}
+.btn-reject:hover{background:rgba(255,71,87,.2)}
+.flow-steps{display:flex;align-items:center;gap:8px;font-size:12px;margin-top:10px;flex-wrap:wrap}
+.flow-step{display:flex;align-items:center;gap:4px}
+.flow-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.fd-done{background:rgba(0,214,143,.2);color:#00d68f;border:1px solid rgba(0,214,143,.3)}
+.fd-current{background:rgba(0,137,255,.25);color:#0089ff;border:1px solid rgba(0,137,255,.4)}
+.fd-pending{background:rgba(255,255,255,.06);color:#4a7fa5;border:1px solid rgba(255,255,255,.1)}
+.flow-arrow{color:#3a5070}
+.tab-bar{display:flex;gap:4px;background:rgba(0,137,255,.06);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
+.tab{padding:8px 20px;border-radius:8px;font-size:14px;cursor:pointer;color:#6a9ab8;transition:.2s}
+.tab.active{background:rgba(0,137,255,.25);color:#fff}
+.tab-content{display:none}.tab-content.show{display:block}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🏗️</div><div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item"><span class="icon">📋</span>项目管理</a>
+      <a href="finance.html" class="nav-item"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item active"><span class="icon">✅</span>OA审批<span class="nav-badge">3</span></a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item"><span class="icon">🤖</span>AI助手</a>
+    </nav>
+    <div class="sidebar-footer"><div class="user-info"><div class="avatar">杨</div><div><div class="user-name">杨玉霞</div><div class="user-role">项目经理</div></div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">OA审批</div>
+      <div class="topbar-right">
+        <div class="topbar-btn primary" onclick="alert('请选择审批类型后填写表单')">+ 发起审批</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="approval-types">
+        <div class="at-card" onclick="alert('合同审批：填写合同金额、客户、工期等信息')"><div class="at-icon">📄</div><div class="at-label">合同审批</div></div>
+        <div class="at-card" onclick="alert('采购申请：填写采购物品、数量、金额、供应商')"><div class="at-icon">🛒</div><div class="at-label">采购申请</div></div>
+        <div class="at-card" onclick="alert('报销审批：上传发票凭证，填写报销金额')"><div class="at-icon">💸</div><div class="at-label">报销审批</div></div>
+        <div class="at-card" onclick="alert('项目立项：填写项目基本信息，提交立项申请')"><div class="at-icon">🚀</div><div class="at-label">项目立项</div></div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab active" onclick="switchTab(this,'待我审批')">⏳ 待我审批 <span style="color:#ff4757">(3)</span></div>
+        <div class="tab" onclick="switchTab(this,'我发起的')">📤 我发起的</div>
+        <div class="tab" onclick="switchTab(this,'已完成')">✅ 已完成</div>
+      </div>
+      <div class="tab-content show" id="tab-待我审批">
+        <div class="approval-item">
+          <div class="ai-header">
+            <div class="ai-title">📄 合同审批 · 瑞幸咖啡福田CBD店装修合同</div>
+            <span class="tag tag-yellow">待审批</span>
+          </div>
+          <div class="ai-meta">
+            <span>👤 发起人：李明</span>
+            <span>💰 合同金额：¥182,000</span>
+            <span>📅 提交时间：2026-04-09 14:30</span>
+          </div>
+          <div style="font-size:13px;color:#7ab3cc;margin-top:8px;padding:10px;background:rgba(0,137,255,.06);border-radius:8px">
+            合同说明：瑞幸咖啡福田CBD店装修工程，合同金额18.2万元，工期2026-03-20至2026-05-10，含主体装修及水电改造。
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-dot fd-done">✓</div><span style="color:#00d68f">提交</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-current">2</div><span style="color:#0089ff">经理审批</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-pending">3</div><span style="color:#4a7fa5">总经理</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-pending">4</div><span style="color:#4a7fa5">财务确认</span></div>
+          </div>
+          <div class="ai-footer">
+            <span style="font-size:12px;color:#4a7fa5">⏱️ 等待时长：22小时</span>
+            <div class="approve-btns">
+              <button class="btn-reject" onclick="handleApproval(this,'reject')">❌ 拒绝</button>
+              <button class="btn-approve" onclick="handleApproval(this,'approve')">✅ 同意</button>
+            </div>
+          </div>
+        </div>
+        <div class="approval-item">
+          <div class="ai-header">
+            <div class="ai-title">🛒 采购申请 · 肯德基龙华店装修材料采购</div>
+            <span class="tag tag-yellow">待审批</span>
+          </div>
+          <div class="ai-meta">
+            <span>👤 发起人：张伟</span>
+            <span>💰 采购金额：¥68,000</span>
+            <span>📅 提交时间：2026-04-09 10:15</span>
+          </div>
+          <div style="font-size:13px;color:#7ab3cc;margin-top:8px;padding:10px;background:rgba(0,137,255,.06);border-radius:8px">
+            采购清单：防火板材2000㎡、铝合金龙骨500米、地砖800㎡，供应商：深圳鑫材料公司，含税报价¥68,000。
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-dot fd-done">✓</div><span style="color:#00d68f">提交</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-current">2</div><span style="color:#0089ff">经理审批</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-pending">3</div><span style="color:#4a7fa5">财务付款</span></div>
+          </div>
+          <div class="ai-footer">
+            <span style="font-size:12px;color:#4a7fa5">⏱️ 等待时长：28小时</span>
+            <div class="approve-btns">
+              <button class="btn-reject" onclick="handleApproval(this,'reject')">❌ 拒绝</button>
+              <button class="btn-approve" onclick="handleApproval(this,'approve')">✅ 同意</button>
+            </div>
+          </div>
+        </div>
+        <div class="approval-item">
+          <div class="ai-header">
+            <div class="ai-title">💸 报销审批 · 4月差旅报销</div>
+            <span class="tag tag-yellow">待审批</span>
+          </div>
+          <div class="ai-meta">
+            <span>👤 发起人：李明</span>
+            <span>💰 报销金额：¥12,800</span>
+            <span>📅 提交时间：2026-04-08 17:00</span>
+          </div>
+          <div style="font-size:13px;color:#7ab3cc;margin-top:8px;padding:10px;background:rgba(0,137,255,.06);border-radius:8px">
+            报销明细：深圳-广州出差交通费¥1,200、住宿费¥2,800、客户招待费¥6,500、材料运输费¥2,300，合计¥12,800。
+          </div>
+          <div class="ai-footer">
+            <span style="font-size:12px;color:#4a7fa5">⏱️ 等待时长：45小时</span>
+            <div class="approve-btns">
+              <button class="btn-reject" onclick="handleApproval(this,'reject')">❌ 拒绝</button>
+              <button class="btn-approve" onclick="handleApproval(this,'approve')">✅ 同意</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-我发起的">
+        <div class="approval-item">
+          <div class="ai-header"><div class="ai-title">🚀 项目立项 · 深圳北站综合体公区维修</div><span class="tag tag-blue">审批中</span></div>
+          <div class="ai-meta"><span>💰 合同金额：¥1,200,000</span><span>📅 提交：2026-04-01</span></div>
+          <div class="flow-steps">
+            <div class="flow-step"><div class="flow-dot fd-done">✓</div><span style="color:#00d68f">提交</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-done">✓</div><span style="color:#00d68f">经理审批</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-current">3</div><span style="color:#0089ff">总经理</span></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="flow-dot fd-pending">4</div><span style="color:#4a7fa5">财务</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-已完成">
+        <div class="table-card">
+          <table>
+            <thead><tr><th>审批类型</th><th>标题</th><th>发起人</th><th>金额</th><th>完成时间</th><th>结果</th></tr></thead>
+            <tbody>
+              <tr><td>合同审批</td><td>麦当劳宝安中心店合同</td><td>张伟</td><td>¥420,000</td><td>2025-10-25</td><td><span class="tag tag-green">已通过</span></td></tr>
+              <tr><td>采购申请</td><td>万象城公区材料采购</td><td>杨玉霞</td><td>¥120,000</td><td>2026-04-03</td><td><span class="tag tag-green">已通过</span></td></tr>
+              <tr><td>报销审批</td><td>3月差旅报销</td><td>李明</td><td>¥8,500</td><td>2026-04-05</td><td><span class="tag tag-green">已通过</span></td></tr>
+              <tr><td>采购申请</td><td>星巴克材料采购</td><td>张伟</td><td>¥35,000</td><td>2026-04-06</td><td><span class="tag tag-red">已拒绝</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function switchTab(el,name){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('show'));document.getElementById('tab-'+name).classList.add('show')}
+function handleApproval(btn,type){
+  const item=btn.closest('.approval-item');
+  const title=item.querySelector('.ai-title').textContent;
+  if(type==='approve'){item.querySelector('.tag').className='tag tag-green';item.querySelector('.tag').textContent='已通过';item.querySelector('.approve-btns').innerHTML='<span style="color:#00d68f;font-size:13px">✅ 已同意</span>';alert('审批通过：'+title)}
+  else{item.querySelector('.tag').className='tag tag-red';item.querySelector('.tag').textContent='已拒绝';item.querySelector('.approve-btns').innerHTML='<span style="color:#ff4757;font-size:13px">❌ 已拒绝</span>';alert('已拒绝：'+title)}
+}
+</script>
+</body>
+</html>

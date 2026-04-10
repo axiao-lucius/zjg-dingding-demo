@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>客户管理 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.client-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:20px}
+.client-card{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:14px;padding:20px;cursor:pointer;transition:.3s}
+.client-card:hover{border-color:#0089ff;transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,137,255,.15)}
+.cc-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.cc-avatar{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cc-name{font-size:15px;font-weight:700;color:#fff}
+.cc-type{font-size:12px;color:#4a7fa5;margin-top:2px}
+.cc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.cc-stat{text-align:center;background:rgba(0,137,255,.06);border-radius:8px;padding:8px}
+.cc-stat-num{font-size:16px;font-weight:700;color:#0089ff}
+.cc-stat-label{font-size:11px;color:#4a7fa5}
+.cc-contacts{font-size:12px;color:#7ab3cc;display:flex;gap:12px}
+.cc-contacts span{display:flex;align-items:center;gap:4px}
+.filter-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.filter-tab{padding:6px 16px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid rgba(0,137,255,.2);color:#6a9ab8;transition:.2s}
+.filter-tab.active,.filter-tab:hover{background:rgba(0,137,255,.2);color:#fff;border-color:#0089ff}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🏗️</div><div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item"><span class="icon">📋</span>项目管理</a>
+      <a href="finance.html" class="nav-item"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item"><span class="icon">✅</span>OA审批<span class="nav-badge">3</span></a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item active"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item"><span class="icon">🤖</span>AI助手</a>
+    </nav>
+    <div class="sidebar-footer"><div class="user-info"><div class="avatar">杨</div><div><div class="user-name">杨玉霞</div><div class="user-role">项目经理</div></div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">客户管理</div>
+      <div class="topbar-right"><div class="topbar-btn primary" onclick="alert('新建客户：填写客户名称、行业、联系人等信息')">+ 新建客户</div></div>
+    </div>
+    <div class="content">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">合作客户数</div><div class="stat-value">18<span class="stat-unit"> 家</span></div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-label">重点客户</div><div class="stat-value">6<span class="stat-unit"> 家</span></div></div>
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">客户总合同额</div><div class="stat-value">2,860<span class="stat-unit"> 万</span></div></div>
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">复购客户</div><div class="stat-value">12<span class="stat-unit"> 家</span></div></div>
+      </div>
+      <div class="filter-bar">
+        <div class="filter-tab active">全部(18)</div>
+        <div class="filter-tab">餐饮连锁(10)</div>
+        <div class="filter-tab">商业综合体(5)</div>
+        <div class="filter-tab">其他(3)</div>
+      </div>
+      <div class="client-grid">
+        <div class="client-card">
+          <div class="cc-header"><div class="cc-avatar" style="background:rgba(255,100,0,.15)">🍗</div><div><div class="cc-name">肯德基（中国）餐饮有限公司</div><div class="cc-type">餐饮连锁 · 重点客户 ⭐</div></div></div>
+          <div class="cc-stats"><div class="cc-stat"><div class="cc-stat-num">8</div><div class="cc-stat-label">合作项目</div></div><div class="cc-stat"><div class="cc-stat-num">486万</div><div class="cc-stat-label">合同总额</div></div><div class="cc-stat"><div class="cc-stat-num">98%</div><div class="cc-stat-label">回款率</div></div></div>
+          <div class="cc-contacts"><span>👤 张明（采购经理）</span><span>📱 138****8888</span></div>
+          <div style="margin-top:10px"><span class="tag tag-green">合作中</span><span class="tag tag-blue" style="margin-left:6px">新店装修</span></div>
+        </div>
+        <div class="client-card">
+          <div class="cc-header"><div class="cc-avatar" style="background:rgba(255,200,0,.15)">🍔</div><div><div class="cc-name">麦当劳（中国）有限公司</div><div class="cc-type">餐饮连锁 · 重点客户 ⭐</div></div></div>
+          <div class="cc-stats"><div class="cc-stat"><div class="cc-stat-num">6</div><div class="cc-stat-label">合作项目</div></div><div class="cc-stat"><div class="cc-stat-num">378万</div><div class="cc-stat-label">合同总额</div></div><div class="cc-stat"><div class="cc-stat-num">100%</div><div class="cc-stat-label">回款率</div></div></div>
+          <div class="cc-contacts"><span>👤 李华（工程部）</span><span>📱 139****6666</span></div>
+          <div style="margin-top:10px"><span class="tag tag-green">合作中</span><span class="tag tag-blue" style="margin-left:6px">新店装修</span></div>
+        </div>
+        <div class="client-card">
+          <div class="cc-header"><div class="cc-avatar" style="background:rgba(0,180,100,.15)">☕</div><div><div class="cc-name">瑞幸咖啡（中国）有限公司</div><div class="cc-type">餐饮连锁 · 成长客户</div></div></div>
+          <div class="cc-stats"><div class="cc-stat"><div class="cc-stat-num">4</div><div class="cc-stat-label">合作项目</div></div><div class="cc-stat"><div class="cc-stat-num">182万</div><div class="cc-stat-label">合同总额</div></div><div class="cc-stat"><div class="cc-stat-num">85%</div><div class="cc-stat-label">回款率</div></div></div>
+          <div class="cc-contacts"><span>👤 王雪（运营部）</span><span>📱 136****7777</span></div>
+          <div style="margin-top:10px"><span class="tag tag-blue">进行中</span><span class="tag tag-green" style="margin-left:6px">快速扩张</span></div>
+        </div>
+        <div class="client-card">
+          <div class="cc-header"><div class="cc-avatar" style="background:rgba(0,100,255,.15)">🏢</div><div><div class="cc-name">华润万象生活</div><div class="cc-type">商业综合体 · 重点客户 ⭐</div></div></div>
+          <div class="cc-stats"><div class="cc-stat"><div class="cc-stat-num">3</div><div class="cc-stat-label">合作项目</div></div><div class="cc-stat"><div class="cc-stat-num">568万</div><div class="cc-stat-label">合同总额</div></div><div class="cc-stat"><div class="cc-stat-num">75%</div><div class="cc-stat-label">回款率</div></div></div>
+          <div class="cc-contacts"><span>👤 陈总（工程部）</span><span>📱 137****5555</span></div>
+          <div style="margin-top:10px"><span class="tag tag-blue">进行中</span><span class="tag tag-yellow" style="margin-left:6px">回款跟进</span></div>
+        </div>
+        <div class="client-card">
+          <div class="cc-header"><div class="cc-avatar" style="background:rgba(0,150,255,.15)">☕</div><div><div class="cc-name">星巴克咖啡（中国）有限公司</div><div class="cc-type">餐饮连锁 · 成长客户</div></div></div>
+          <div class="cc-stats"><div class="cc-stat"><div class="cc-stat-num">3</div><div class="cc-stat-label">合作项目</div></div><div class="cc-stat"><div class="cc-stat-num">256万</div><div class="cc-stat-label">合同总额</div></div><div class="cc-stat"><div class="cc-stat-num">90%</div><div class="cc-stat-label">回款率</div></div></div>
+          <div class="cc-contacts"><span>👤 刘工（工程）</span><span>📱 135****4444</span></div>
+          <div style="margin-top:10px"><span class="tag tag-blue">进行中</span></div>
+        </div>
+        <div class="client-card">
+          <div class="cc-header"><div class="cc-avatar" style="background:rgba(255,50,50,.15)">🏬</div><div><div class="cc-name">万达商业管理有限公司</div><div class="cc-type">商业综合体 · 重点客户 ⭐</div></div></div>
+          <div class="cc-stats"><div class="cc-stat"><div class="cc-stat-num">2</div><div class="cc-stat-label">合作项目</div></div><div class="cc-stat"><div class="cc-stat-num">880万</div><div class="cc-stat-label">合同总额</div></div><div class="cc-stat"><div class="cc-stat-num">55%</div><div class="cc-stat-label">回款率</div></div></div>
+          <div class="cc-contacts"><span>👤 赵经理（工程部）</span><span>📱 133****3333</span></div>
+          <div style="margin-top:10px"><span class="tag tag-red">⚠️回款预警</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

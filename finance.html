@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>财务管理 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.tab-bar{display:flex;gap:4px;background:rgba(0,137,255,.06);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
+.tab{padding:8px 20px;border-radius:8px;font-size:14px;cursor:pointer;color:#6a9ab8;transition:.2s}
+.tab.active{background:rgba(0,137,255,.25);color:#fff}
+.tab-content{display:none}.tab-content.show{display:block}
+.amount-card{background:linear-gradient(135deg,rgba(0,137,255,.2),rgba(0,100,200,.1));border:1px solid rgba(0,137,255,.3);border-radius:14px;padding:20px;margin-bottom:8px}
+.amount-big{font-size:36px;font-weight:700;color:#fff}
+.amount-label{font-size:13px;color:#7ab3cc;margin-bottom:8px}
+.cashflow{display:flex;gap:12px;margin-bottom:24px}
+.cf-card{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:12px;padding:16px;text-align:center}
+.cf-num{font-size:22px;font-weight:700;margin-bottom:4px}
+.cf-label{font-size:12px;color:#6a9ab8}
+.cf-in{color:#00d68f}.cf-out{color:#ff4757}.cf-balance{color:#0089ff}
+.expense-form{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:14px;padding:20px;margin-bottom:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group label{font-size:12px;color:#6a9ab8;display:block;margin-bottom:6px}
+.form-group select,.form-group input{width:100%;background:rgba(0,137,255,.06);border:1px solid rgba(0,137,255,.2);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none}
+.form-group select option{background:#0a1628}
+.submit-btn{background:linear-gradient(135deg,#0089ff,#0066cc);border:none;border-radius:8px;padding:10px 28px;color:#fff;font-size:14px;cursor:pointer;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🏗️</div><div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item"><span class="icon">📋</span>项目管理</a>
+      <a href="finance.html" class="nav-item active"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item"><span class="icon">✅</span>OA审批<span class="nav-badge">3</span></a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item"><span class="icon">🤖</span>AI助手</a>
+    </nav>
+    <div class="sidebar-footer"><div class="user-info"><div class="avatar">财</div><div><div class="user-name">王芳</div><div class="user-role">财务主管</div></div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">财务管理</div>
+      <div class="topbar-right">
+        <div class="topbar-btn">📅 2026年4月</div>
+        <div class="topbar-btn primary">导出报表</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-icon">📈</div><div class="stat-label">本月合同金额</div><div class="stat-value">386<span class="stat-unit"> 万</span></div><div class="stat-trend trend-up">▲ +12%</div></div>
+        <div class="stat-card"><div class="stat-icon">💚</div><div class="stat-label">本月已收款</div><div class="stat-value">218<span class="stat-unit"> 万</span></div><div class="stat-trend trend-up">回款率 56%</div></div>
+        <div class="stat-card"><div class="stat-icon">💸</div><div class="stat-label">本月已付款</div><div class="stat-value">142<span class="stat-unit"> 万</span></div><div class="stat-trend trend-flat">材料+人工</div></div>
+        <div class="stat-card"><div class="stat-icon">🔒</div><div class="stat-label">质保金余额</div><div class="stat-value">47<span class="stat-unit"> 万</span></div><div class="stat-trend trend-down">3笔逾期</div></div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab active" onclick="switchTab(this,'收款记录')">💚 收款记录</div>
+        <div class="tab" onclick="switchTab(this,'付款记录')">💸 付款记录</div>
+        <div class="tab" onclick="switchTab(this,'报销申请')">📝 报销申请</div>
+        <div class="tab" onclick="switchTab(this,'质保金')">🔒 质保金</div>
+      </div>
+      <div class="tab-content show" id="tab-收款记录">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">收款明细</div><div class="topbar-btn" onclick="alert('新增收款记录')">+ 录入收款</div></div>
+          <table>
+            <thead><tr><th>收款日期</th><th>项目名称</th><th>客户</th><th>收款金额</th><th>收款类型</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr><td>2026-04-08</td><td>麦当劳宝安中心店</td><td>麦当劳（中国）</td><td style="color:#00d68f;font-weight:700">¥185,000</td><td>工程款</td><td><span class="tag tag-green">已到账</span></td></tr>
+              <tr><td>2026-04-05</td><td>肯德基龙华新区店</td><td>肯德基（中国）</td><td style="color:#00d68f;font-weight:700">¥230,000</td><td>进度款</td><td><span class="tag tag-green">已到账</span></td></tr>
+              <tr><td>2026-04-02</td><td>万象城公区维修</td><td>华润万象生活</td><td style="color:#00d68f;font-weight:700">¥284,000</td><td>首付款</td><td><span class="tag tag-green">已到账</span></td></tr>
+              <tr><td>2026-03-28</td><td>星巴克南山海岸城店</td><td>星巴克（中国）</td><td style="color:#00d68f;font-weight:700">¥128,000</td><td>预付款</td><td><span class="tag tag-green">已到账</span></td></tr>
+              <tr><td>2026-03-20</td><td>龙华万达广场公区</td><td>万达商业管理</td><td style="color:#ffbe00;font-weight:700">¥220,000</td><td>首付款</td><td><span class="tag tag-yellow">确认中</span></td></tr>
+              <tr><td>2026-03-15</td><td>汉堡王光明新区店</td><td>汉堡王（中国）</td><td style="color:#ff4757;font-weight:700">¥157,500</td><td>进度款</td><td><span class="tag tag-red">逾期未收</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-付款记录">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">付款明细</div><div class="topbar-btn" onclick="alert('新增付款申请')">+ 申请付款</div></div>
+          <table>
+            <thead><tr><th>付款日期</th><th>项目名称</th><th>收款方</th><th>付款金额</th><th>用途</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr><td>2026-04-09</td><td>肯德基龙华新区店</td><td>深圳鑫材料公司</td><td style="color:#ff4757;font-weight:700">¥68,000</td><td>材料采购</td><td><span class="tag tag-green">已付款</span></td></tr>
+              <tr><td>2026-04-07</td><td>瑞幸咖啡福田店</td><td>施工队-王师傅</td><td style="color:#ff4757;font-weight:700">¥45,000</td><td>人工费用</td><td><span class="tag tag-green">已付款</span></td></tr>
+              <tr><td>2026-04-03</td><td>万象城公区维修</td><td>深圳宏达装材</td><td style="color:#ff4757;font-weight:700">¥120,000</td><td>材料采购</td><td><span class="tag tag-yellow">审批中</span></td></tr>
+              <tr><td>2026-03-30</td><td>星巴克南山店</td><td>施工队-李师傅</td><td style="color:#ff4757;font-weight:700">¥38,000</td><td>人工费用</td><td><span class="tag tag-green">已付款</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-报销申请">
+        <div class="expense-form">
+          <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:16px">📝 新建报销申请</div>
+          <div class="form-row">
+            <div class="form-group"><label>报销类型</label><select><option>差旅费</option><option>材料采购</option><option>招待费</option><option>办公费</option><option>其他</option></select></div>
+            <div class="form-group"><label>关联项目</label><select><option>肯德基龙华新区店</option><option>瑞幸咖啡福田店</option><option>万象城公区维修</option><option>星巴克南山店</option></select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>报销金额（元）</label><input type="number" placeholder="请输入金额"></div>
+            <div class="form-group"><label>发生日期</label><input type="date" value="2026-04-10"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:16px"><label>报销说明</label><input type="text" placeholder="请简要说明报销用途"></div>
+          <button class="submit-btn" onclick="alert('报销申请已提交，等待审批！')">提交申请</button>
+        </div>
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">历史报销记录</div></div>
+          <table>
+            <thead><tr><th>申请时间</th><th>申请人</th><th>类型</th><th>金额</th><th>状态</th><th>审批人</th></tr></thead>
+            <tbody>
+              <tr><td>2026-04-08</td><td>李明</td><td>差旅费</td><td>¥12,800</td><td><span class="tag tag-yellow">待审批</span></td><td>杨玉霞</td></tr>
+              <tr><td>2026-04-05</td><td>张伟</td><td>材料采购</td><td>¥8,500</td><td><span class="tag tag-green">已通过</span></td><td>杨玉霞</td></tr>
+              <tr><td>2026-03-28</td><td>杨玉霞</td><td>招待费</td><td>¥3,200</td><td><span class="tag tag-green">已通过</span></td><td>总经理</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-质保金">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">质保金管理</div></div>
+          <table>
+            <thead><tr><th>项目名称</th><th>质保金额</th><th>质保期限</th><th>到期日</th><th>状态</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr><td>麦当劳宝安中心店</td><td>¥42,000</td><td>12个月</td><td>2027-01-20</td><td><span class="tag tag-green">质保中</span></td><td><span style="color:#0089ff;cursor:pointer">查看</span></td></tr>
+              <tr><td>万象城公区维修</td><td>¥56,800</td><td>24个月</td><td>2028-04-30</td><td><span class="tag tag-blue">质保中</span></td><td><span style="color:#0089ff;cursor:pointer">查看</span></td></tr>
+              <tr><td>某商业体-2025Q3</td><td>¥38,000</td><td>12个月</td><td>2026-03-15</td><td><span class="tag tag-red">⚠️逾期</span></td><td><span style="color:#ff4757;cursor:pointer">催收</span></td></tr>
+              <tr><td>某餐饮门店-2025Q2</td><td>¥25,000</td><td>12个月</td><td>2026-02-28</td><td><span class="tag tag-red">⚠️逾期</span></td><td><span style="color:#ff4757;cursor:pointer">催收</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function switchTab(el,name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('show'));
+  document.getElementById('tab-'+name).classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI助手 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.ai-layout{display:flex;gap:16px;height:calc(100vh - 108px)}
+.ai-sidebar{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+.ai-shortcuts{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:12px;padding:14px}
+.ai-shortcuts-title{font-size:13px;color:#7ab3cc;margin-bottom:10px;font-weight:600}
+.shortcut-btn{display:block;width:100%;text-align:left;background:rgba(0,137,255,.06);border:1px solid rgba(0,137,255,.15);border-radius:8px;padding:8px 12px;color:#b0cce0;font-size:12px;cursor:pointer;margin-bottom:6px;transition:.2s}
+.shortcut-btn:hover{background:rgba(0,137,255,.2);color:#fff;border-color:#0089ff}
+.chat-area{flex:1;display:flex;flex-direction:column;background:rgba(255,255,255,.03);border:1px solid rgba(0,137,255,.15);border-radius:14px;overflow:hidden}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.msg{display:flex;gap:10px;max-width:85%}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.msg-ai-avatar{background:linear-gradient(135deg,#0089ff,#00c6ff)}
+.msg-user-avatar{background:linear-gradient(135deg,#6c5ce7,#a29bfe)}
+.msg-bubble{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;font-size:14px;color:#c0d8e8;line-height:1.6}
+.msg.user .msg-bubble{background:rgba(0,137,255,.2);border-color:rgba(0,137,255,.3);color:#fff}
+.msg-time{font-size:11px;color:#3a5070;margin-top:4px;text-align:right}
+.typing{display:flex;gap:4px;padding:4px 0}
+.typing span{width:6px;height:6px;background:#0089ff;border-radius:50%;animation:bounce .8s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-input-area{border-top:1px solid rgba(0,137,255,.1);padding:14px 16px;display:flex;gap:10px;align-items:flex-end}
+.chat-input{flex:1;background:rgba(0,137,255,.06);border:1px solid rgba(0,137,255,.2);border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;outline:none;resize:none;min-height:42px;max-height:100px;font-family:inherit}
+.chat-input:focus{border-color:#0089ff}
+.chat-input::placeholder{color:#3a6080}
+.send-btn{background:linear-gradient(135deg,#0089ff,#0066cc);border:none;border-radius:10px;width:42px;height:42px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s}
+.send-btn:hover{transform:scale(1.05);box-shadow:0 4px 15px rgba(0,137,255,.4)}
+@media(max-width:768px){.ai-sidebar{display:none}.ai-layout{height:calc(100vh - 108px)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🏗️</div><div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item"><span class="icon">📋</span>项目管理</a>
+      <a href="finance.html" class="nav-item"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item"><span class="icon">✅</span>OA审批<span class="nav-badge">3</span></a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item active"><span class="icon">🤖</span>AI助手</a>
+    </nav>
+    <div class="sidebar-footer"><div class="user-info"><div class="avatar">杨</div><div><div class="user-name">杨玉霞</div><div class="user-role">项目经理</div></div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">🤖 AI智能助手</div>
+      <div class="topbar-right"><div class="topbar-btn" onclick="clearChat()">🗑️ 清空对话</div></div>
+    </div>
+    <div class="content" style="padding:16px;height:calc(100vh-60px)">
+      <div class="ai-layout">
+        <div class="ai-sidebar">
+          <div class="ai-shortcuts">
+            <div class="ai-shortcuts-title">⚡ 快捷问答</div>
+            <div class="shortcut-btn" onclick="askAI('本月项目情况汇总')">📋 本月项目汇总</div>
+            <div class="shortcut-btn" onclick="askAI('哪些项目有回款风险？')">⚠️ 回款风险分析</div>
+            <div class="shortcut-btn" onclick="askAI('帮我起草一份催款函')">📝 起草催款函</div>
+            <div class="shortcut-btn" onclick="askAI('本月收支情况如何？')">💰 收支情况</div>
+            <div class="shortcut-btn" onclick="askAI('有哪些待处理的审批？')">✅ 待处理审批</div>
+            <div class="shortcut-btn" onclick="askAI('帮我生成本周工作报告')">📊 生成工作报告</div>
+          </div>
+          <div class="ai-shortcuts">
+            <div class="ai-shortcuts-title">💡 AI能力</div>
+            <div style="font-size:12px;color:#4a7fa5;line-height:1.8">
+              ✅ 项目进度分析<br>
+              ✅ 财务数据汇总<br>
+              ✅ 合同模板生成<br>
+              ✅ 催款函起草<br>
+              ✅ 风险预警提示<br>
+              ✅ 工作报告生成
+            </div>
+          </div>
+        </div>
+        <div class="chat-area">
+          <div class="chat-messages" id="chatMessages">
+            <div class="msg">
+              <div class="msg-avatar msg-ai-avatar">🤖</div>
+              <div>
+                <div class="msg-bubble">您好！我是紫金港达美的AI智能助手 👋<br><br>我可以帮您：<br>• 📋 查询和汇总项目进度<br>• 💰 分析财务收支数据<br>• ⚠️ 识别回款风险并预警<br>• 📝 起草合同、催款函等文件<br>• 📊 生成工作汇报<br><br>请问有什么可以帮您的？</div>
+                <div class="msg-time">14:35</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <textarea class="chat-input" id="chatInput" placeholder="输入问题，例如：本月哪些项目回款风险高？" rows="1" onkeydown="handleKey(event)"></textarea>
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const aiReplies={
+  '本月项目情况汇总':'📋 **本月项目汇总（截至2026-04-10）**\n\n**进行中：8个项目**\n• 肯德基龙华店：进度80%，预计4月20日完工\n• 瑞幸福田店：进度35%，正常推进中\n• 万象城公区：进度60%，工期正常\n• 星巴克南山店：进度50%\n• 汉堡王光明店：进度65%\n• 深圳北站综合体：进度30%，⚠️有延误风险\n• 龙华万达广场：进度25%，⚠️工期预警\n\n**本月完工：5个项目** ✅\n**合同总额：386万元** | **已收款：218万元**',
+  '哪些项目有回款风险？':'⚠️ **回款风险分析报告**\n\n**高风险（需立即处理）：**\n🔴 汉堡王光明新区店 — 进度款¥157,500已逾期20天，建议今日电话催收\n🔴 万达广场公区维修 — 工期延误15天，可能影响后续付款节点\n\n**中风险（需持续关注）：**\n🟡 质保金超期未收 — 2笔合计¥63,000，建议本周发正式催收函\n🟡 深圳北站项目 — 第二期款项¥300,000确认中\n\n**建议行动：** 是否需要我帮您起草一份催款函？',
+  '帮我起草一份催款函':'📝 **催款函（草稿）**\n\n汉堡王（中国）有限公司\n工程部负责人：\n\n您好！\n\n贵司委托我司承建的**光明新区店装修工程**，目前施工进度已达65%，按合同约定，进度款¥157,500应于2026-03-20前支付，现已逾期20天。\n\n恳请贵司安排财务于**本周五（2026-04-12）前**完成付款，银行账号如下：\n• 户名：深圳紫金港达美装饰工程有限公司\n• 开户行：中国银行深圳分行\n• 账号：6222xxxxxxxxxxxx\n\n如有疑问，请联系项目经理张伟：138xxxx8888\n\n深圳紫金港达美装饰工程有限公司\n2026年4月10日',
+  '本月收支情况如何？':'💰 **本月收支分析（截至4月10日）**\n\n**收入端：**\n• 合同签约额：386万元\n• 实际到账：218万元（回款率56.5%）\n• 待收款项：168万元\n\n**支出端：**\n• 材料采购：约86万元\n• 人工费用：约38万元\n• 管理费用：约18万元\n• 合计支出：142万元\n\n**净利润预估：+76万元** ✅\n\n📌 **AI建议：** 重点催收汉堡王¥15.75万和万达¥22万，可将本月回款率提升至72%以上。',
+  '有哪些待处理的审批？':'✅ **待处理审批（共3条）**\n\n1️⃣ **合同审批** — 瑞幸咖啡福田店合同\n   发起人：李明 | 金额：¥182,000 | 等待22小时\n\n2️⃣ **采购申请** — 肯德基龙华店材料采购\n   发起人：张伟 | 金额：¥68,000 | 等待28小时\n\n3️⃣ **报销审批** — 4月差旅报销\n   发起人：李明 | 金额：¥12,800 | 等待45小时\n\n⚠️ 第3条已超48小时，建议优先处理！\n👉 [前往审批页面]',
+  '帮我生成本周工作报告':'📊 **本周工作报告（2026.04.07-04.10）**\n\n**一、项目进展**\n• 肯德基龙华店主体施工完成，进度从65%→80%\n• 瑞幸福田店正式开工，完成基础拆除\n• 万象城公区维修按计划推进，进度60%\n\n**二、财务情况**\n• 本周到账：¥415,000（麦当劳尾款+肯德基进度款）\n• 本周支出：¥113,000（材料+人工）\n\n**三、待解决事项**\n• 汉堡王逾期款项需催收\n• 万达广场工期延误需协调增援\n• 3条OA审批待处理\n\n**四、下周计划**\n• 肯德基龙华店冲刺完工，安排验收\n• 跟进北站综合体进度，解决人员问题'
+};
+function getTime(){return new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}
+function addMsg(text,isUser){
+  const msgs=document.getElementById('chatMessages');
+  const div=document.createElement('div');
+  div.className='msg'+(isUser?' user':'');
+  div.innerHTML=`<div class="msg-avatar ${isUser?'msg-user-avatar':'msg-ai-avatar'}">${isUser?'👤':'🤖'}</div><div><div class="msg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div><div class="msg-time">${getTime()}</div></div>`;
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+function showTyping(){
+  const msgs=document.getElementById('chatMessages');
+  const div=document.createElement('div');div.className='msg';div.id='typing';
+  div.innerHTML='<div class="msg-avatar msg-ai-avatar">🤖</div><div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+function removeTyping(){const t=document.getElementById('typing');if(t)t.remove()}
+function getAIReply(q){
+  for(const key in aiReplies){if(q.includes(key.slice(0,6)))return aiReplies[key]}
+  return'我已收到您的问题：「'+q+'」\n\n正在分析系统数据中...\n\n根据当前项目和财务数据，建议您：\n• 优先处理逾期回款（汉堡王¥15.75万）\n• 关注万达广场工期延误风险\n• 本周内完成3条待审批事项\n\n如需更详细的分析，请告诉我具体需求 😊';
+}
+function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();if(!text)return;
+  addMsg(text,true);input.value='';
+  showTyping();
+  setTimeout(()=>{removeTyping();addMsg(getAIReply(text),false)},1200+Math.random()*800);
+}
+function askAI(q){document.getElementById('chatInput').value=q;sendMessage()}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}}
+function clearChat(){document.getElementById('chatMessages').innerHTML='';addMsg('对话已清空，有什么可以帮您的？',false)}
+</script>
+</body>
+</html>

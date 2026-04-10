@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>老板驾驶舱 · 紫金港达美</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.boss-header{background:linear-gradient(135deg,rgba(0,137,255,.15),rgba(0,50,120,.1));border:1px solid rgba(0,137,255,.25);border-radius:16px;padding:24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
+.boss-title{font-size:22px;font-weight:700;color:#fff}
+.boss-sub{font-size:13px;color:#7ab3cc;margin-top:4px}
+.live-dot{display:flex;align-items:center;gap:6px;font-size:13px;color:#00d68f}
+.live-dot::before{content:'';width:8px;height:8px;background:#00d68f;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.kpi-card{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:14px;padding:20px;text-align:center}
+.kpi-value{font-size:36px;font-weight:700;color:#fff;line-height:1.1}
+.kpi-unit{font-size:16px;color:#6a9ab8}
+.kpi-label{font-size:13px;color:#6a9ab8;margin-bottom:8px}
+.kpi-change{font-size:12px;margin-top:6px}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.chart-card{background:rgba(255,255,255,.04);border:1px solid rgba(0,137,255,.15);border-radius:14px;padding:20px}
+.chart-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:16px}
+.bar-chart{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-label{font-size:12px;color:#7ab3cc;width:80px;text-align:right;flex-shrink:0}
+.bar-wrap{flex:1;background:rgba(255,255,255,.06);border-radius:4px;height:22px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;color:#fff;font-weight:600;transition:.8s}
+.pie-legend{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pie-row{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+.pie-dot{width:10px;height:10px;border-radius:50%;margin-right:6px;flex-shrink:0}
+.pie-label{display:flex;align-items:center;color:#b0cce0}
+.pie-val{color:#fff;font-weight:600}
+.alert-list{padding:0}
+.alert-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.alert-item:last-child{border-bottom:none}
+.alert-icon{font-size:20px;flex-shrink:0}
+.alert-content{flex:1}
+.alert-title{font-size:13px;color:#c0d8e8}
+.alert-desc{font-size:12px;color:#4a7fa5;margin-top:2px}
+.alert-amount{font-size:14px;font-weight:700;flex-shrink:0}
+@media(max-width:768px){.kpi-grid{grid-template-columns:1fr 1fr}.chart-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon">🏗️</div><div><div class="sidebar-logo-text">紫金港达美</div><div class="sidebar-logo-sub">数字化管理系统</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">核心功能</div>
+      <a href="dashboard.html" class="nav-item"><span class="icon">🏠</span>工作台</a>
+      <a href="projects.html" class="nav-item"><span class="icon">📋</span>项目管理</a>
+      <a href="finance.html" class="nav-item"><span class="icon">💰</span>财务管理</a>
+      <a href="oa.html" class="nav-item"><span class="icon">✅</span>OA审批</a>
+      <div class="nav-section">客户与数据</div>
+      <a href="crm.html" class="nav-item"><span class="icon">👥</span>客户管理</a>
+      <a href="boss.html" class="nav-item active"><span class="icon">📊</span>老板驾驶舱</a>
+      <a href="ai.html" class="nav-item"><span class="icon">🤖</span>AI助手</a>
+    </nav>
+    <div class="sidebar-footer"><div class="user-info"><div class="avatar">总</div><div><div class="user-name">总经理</div><div class="user-role">最高权限</div></div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">老板驾驶舱</div>
+      <div class="topbar-right">
+        <div class="live-dot">实时数据</div>
+        <div class="topbar-btn">📅 2026年4月</div>
+        <div class="topbar-btn primary">导出报告</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="boss-header">
+        <div><div class="boss-title">📊 公司经营概览</div><div class="boss-sub">数据更新时间：2026-04-10 14:35 | 本月第10天</div></div>
+        <div style="text-align:right"><div style="font-size:13px;color:#7ab3cc">本月净利润预估</div><div style="font-size:32px;font-weight:700;color:#00d68f">+76<span style="font-size:16px">万</span></div><div style="font-size:12px;color:#00d68f">▲ 较上月 +18%</div></div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">本月合同总额</div><div class="kpi-value">386<span class="kpi-unit">万</span></div><div class="kpi-change trend-up">▲ +12% 较上月</div></div>
+        <div class="kpi-card"><div class="kpi-label">本月已收款</div><div class="kpi-value">218<span class="kpi-unit">万</span></div><div class="kpi-change trend-up">回款率 56.5%</div></div>
+        <div class="kpi-card"><div class="kpi-label">本月支出</div><div class="kpi-value">142<span class="kpi-unit">万</span></div><div class="kpi-change trend-flat">材料+人工+管理</div></div>
+        <div class="kpi-card"><div class="kpi-label">进行中项目</div><div class="kpi-value">8<span class="kpi-unit">个</span></div><div class="kpi-change trend-up">▲ +2 较上月</div></div>
+        <div class="kpi-card"><div class="kpi-label">应收账款</div><div class="kpi-value">168<span class="kpi-unit">万</span></div><div class="kpi-change trend-down">▼ 3笔逾期</div></div>
+        <div class="kpi-card"><div class="kpi-label">质保金余额</div><div class="kpi-value">47<span class="kpi-unit">万</span></div><div class="kpi-change trend-down">2笔超期未收</div></div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-title">📈 近6月收入趋势（万元）</div>
+          <div class="bar-chart">
+            <div class="bar-row"><div class="bar-label">11月</div><div class="bar-wrap"><div class="bar-fill" style="width:58%;background:linear-gradient(90deg,#0050a0,#0089ff)">232万</div></div></div>
+            <div class="bar-row"><div class="bar-label">12月</div><div class="bar-wrap"><div class="bar-fill" style="width:65%;background:linear-gradient(90deg,#0050a0,#0089ff)">258万</div></div></div>
+            <div class="bar-row"><div class="bar-label">1月</div><div class="bar-wrap"><div class="bar-fill" style="width:52%;background:linear-gradient(90deg,#0050a0,#0089ff)">208万</div></div></div>
+            <div class="bar-row"><div class="bar-label">2月</div><div class="bar-wrap"><div class="bar-fill" style="width:48%;background:linear-gradient(90deg,#0050a0,#0089ff)">192万</div></div></div>
+            <div class="bar-row"><div class="bar-label">3月</div><div class="bar-wrap"><div class="bar-fill" style="width:72%;background:linear-gradient(90deg,#0050a0,#0089ff)">286万</div></div></div>
+            <div class="bar-row"><div class="bar-label">4月(至今)</div><div class="bar-wrap"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#00a0ff,#00d4ff)">218万</div></div></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🥧 收入来源构成</div>
+          <div style="text-align:center;padding:10px 0">
+            <div style="width:120px;height:120px;border-radius:50%;background:conic-gradient(#0089ff 0deg 216deg,#00d68f 216deg 288deg,#ffbe00 288deg 324deg,#ff6b7a 324deg 360deg);margin:0 auto;box-shadow:0 0 30px rgba(0,137,255,.3)"></div>
+          </div>
+          <div class="pie-legend">
+            <div class="pie-row"><div class="pie-label"><div class="pie-dot" style="background:#0089ff"></div>餐饮连锁装修</div><div class="pie-val">60%</div></div>
+            <div class="pie-row"><div class="pie-label"><div class="pie-dot" style="background:#00d68f"></div>公区维修改造</div><div class="pie-val">20%</div></div>
+            <div class="pie-row"><div class="pie-label"><div class="pie-dot" style="background:#ffbe00"></div>其他商业装修</div><div class="pie-val">10%</div></div>
+            <div class="pie-row"><div class="pie-label"><div class="pie-dot" style="background:#ff6b7a"></div>维保服务</div><div class="pie-val">10%</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-title">⚠️ 风险预警</div>
+          <div class="alert-list">
+            <div class="alert-item"><div class="alert-icon">🔴</div><div class="alert-content"><div class="alert-title">万达广场公区项目工期延误</div><div class="alert-desc">预计延误15天，影响回款约¥220,000</div></div><div class="alert-amount" style="color:#ff4757">高风险</div></div>
+            <div class="alert-item"><div class="alert-icon">🟡</div><div class="alert-content"><div class="alert-title">汉堡王光明店进度款逾期</div><div class="alert-desc">¥157,500 已逾期20天，需催收</div></div><div class="alert-amount" style="color:#ffbe00">中风险</div></div>
+            <div class="alert-item"><div class="alert-icon">🟡</div><div class="alert-content"><div class="alert-title">质保金超期未回收</div><div class="alert-desc">2笔合计¥63,000，超期30天以上</div></div><div class="alert-amount" style="color:#ffbe00">中风险</div></div>
+            <div class="alert-item"><div class="alert-icon">🟢</div><div class="alert-content"><div class="alert-title">本月资金流充裕</div><div class="alert-desc">账面余额预计¥76万，可支撑2个月运营</div></div><div class="alert-amount" style="color:#00d68f">健康</div></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🏆 客户贡献排名（合同额）</div>
+          <div class="bar-chart" style="margin-top:8px">
+            <div class="bar-row"><div class="bar-label" style="width:90px">万达商管</div><div class="bar-wrap"><div class="bar-fill" style="width:88%;background:linear-gradient(90deg,#0066cc,#0089ff)">880万</div></div></div>
+            <div class="bar-row"><div class="bar-label" style="width:90px">华润万象</div><div class="bar-wrap"><div class="bar-fill" style="width:57%;background:linear-gradient(90deg,#0066cc,#0089ff)">568万</div></div></div>
+            <div class="bar-row"><div class="bar-label" style="width:90px">肯德基</div><div class="bar-wrap"><div class="bar-fill" style="width:49%;background:linear-gradient(90deg,#0066cc,#0089ff)">486万</div></div></div>
+            <div class="bar-row"><div class="bar-label" style="width:90px">麦当劳</div><div class="bar-wrap"><div class="bar-fill" style="width:38%;background:linear-gradient(90deg,#0066cc,#0089ff)">378万</div></div></div>
+            <div class="bar-row"><div class="bar-label" style="width:90px">星巴克</div><div class="bar-wrap"><div class="bar-fill" style="width:26%;background:linear-gradient(90deg,#0066cc,#0089ff)">256万</div></div></div>
+            <div class="bar-row"><div class="bar-label" style="width:90px">瑞幸咖啡</div><div class="bar-wrap"><div class="bar-fill" style="width:18%;background:linear-gradient(90deg,#0066cc,#0089ff)">182万</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
