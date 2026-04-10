@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>紫金港达美装饰 · 数字化管理系统 Demo</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;background:#050d1a;color:#e8f4ff;overflow-x:hidden}
+  .hero{min-height:100vh;background:linear-gradient(135deg,#050d1a 0%,#0a1628 40%,#0d2040 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 60% 40%,rgba(0,137,255,0.12) 0%,transparent 60%);pointer-events:none}
+  .badge{display:inline-block;background:rgba(0,137,255,0.15);border:1px solid rgba(0,137,255,0.4);color:#0089ff;padding:6px 16px;border-radius:20px;font-size:12px;letter-spacing:2px;margin-bottom:24px}
+  .hero h1{font-size:clamp(24px,6vw,48px);font-weight:700;text-align:center;line-height:1.3;margin-bottom:16px;background:linear-gradient(135deg,#ffffff 0%,#a8d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{font-size:clamp(14px,3vw,18px);color:#7ab3d8;text-align:center;max-width:600px;line-height:1.8;margin-bottom:40px}
+  .cta-group{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .btn{padding:14px 32px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all .3s}
+  .btn-primary{background:linear-gradient(135deg,#0089ff,#0060cc);color:#fff;box-shadow:0 4px 24px rgba(0,137,255,0.4)}
+  .btn-secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#e8f4ff}
+  .dots{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;overflow:hidden}
+  .dot{position:absolute;width:2px;height:2px;background:#0089ff;border-radius:50%;opacity:0.4}
+  .section{padding:80px 20px;max-width:1000px;margin:0 auto}
+  .section-title{font-size:clamp(20px,4vw,32px);font-weight:700;text-align:center;margin-bottom:12px;background:linear-gradient(135deg,#fff,#a8d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .section-sub{text-align:center;color:#7ab3d8;font-size:14px;margin-bottom:48px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .card{background:linear-gradient(135deg,rgba(0,137,255,0.06),rgba(0,60,120,0.1));border:1px solid rgba(0,137,255,0.2);border-radius:16px;padding:28px;transition:all .3s}
+  .card:hover{border-color:rgba(0,137,255,0.5);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,137,255,0.15)}
+  .card-icon{font-size:32px;margin-bottom:16px}
+  .card h3{font-size:17px;font-weight:600;margin-bottom:10px;color:#fff}
+  .card p{font-size:13px;color:#7ab3d8;line-height:1.7}
+  .tag{display:inline-block;background:rgba(0,137,255,0.15);color:#4db8ff;font-size:11px;padding:3px 10px;border-radius:12px;margin-top:12px;margin-right:4px}
+  .timeline{position:relative;padding-left:24px}
+  .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#0089ff,rgba(0,137,255,0.1))}
+  .tl-item{position:relative;padding:0 0 36px 28px}
+  .tl-item::before{content:'';position:absolute;left:-5px;top:4px;width:12px;height:12px;border-radius:50%;background:#0089ff;box-shadow:0 0 12px rgba(0,137,255,0.6)}
+  .tl-week{font-size:12px;color:#0089ff;font-weight:600;letter-spacing:1px;margin-bottom:6px}
+  .tl-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:6px}
+  .tl-desc{font-size:13px;color:#7ab3d8;line-height:1.7}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-top:48px}
+  .stat{text-align:center;padding:28px 20px;background:rgba(0,137,255,0.06);border:1px solid rgba(0,137,255,0.15);border-radius:12px}
+  .stat-num{font-size:clamp(28px,5vw,42px);font-weight:700;background:linear-gradient(135deg,#0089ff,#40c8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stat-label{font-size:12px;color:#7ab3d8;margin-top:6px}
+  footer{text-align:center;padding:40px 20px;color:#3a6080;font-size:13px;border-top:1px solid rgba(0,137,255,0.1)}
+  .divider{height:1px;background:linear-gradient(to right,transparent,rgba(0,137,255,0.3),transparent);margin:0 auto;max-width:800px}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="dots" id="dots"></div>
+  <div class="badge">🏗️ DEMO · 数字化转型方案</div>
+  <h1>紫金港达美装饰<br>数字化管理系统</h1>
+  <p>基于钉钉AI表格 · OA审批 · 自动化流程<br>覆盖项目管理 / 财务管控 / CRM / 老板驾驶舱</p>
+  <div class="cta-group">
+    <a href="https://github.com/axiao-lucius/zjg-dingding-demo" class="btn btn-primary" target="_blank">📂 查看源码</a>
+    <a href="#features" class="btn btn-secondary">了解方案 ↓</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Stats -->
+<div class="section" style="padding-bottom:0">
+  <div class="stats">
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">周 MVP 交付</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">核心业务模块</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">钉钉原生集成</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">额外硬件成本</div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="section" id="features">
+  <div class="section-title">六大核心模块</div>
+  <div class="section-sub">覆盖装饰公司全业务链路，一个平台搞定</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>项目管理</h3>
+      <p>合同录入、施工进度追踪、收付款节点提醒、质保金到期自动预警，项目全生命周期一览无余。</p>
+      <span class="tag">多维表</span><span class="tag">自动提醒</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <h3>财务管控</h3>
+      <p>报销审批流、资金汇总看板、收支负债实时统计，支持后续金蝶系统对接，财务数据随时可查。</p>
+      <span class="tag">OA审批</span><span class="tag">资金看板</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <h3>CRM 客户管理</h3>
+      <p>肯德基/麦当劳/瑞幸等连锁客户档案管理，跟进记录、商机状态、联系人信息集中维护。</p>
+      <span class="tag">客户档案</span><span class="tag">商机跟进</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>老板驾驶舱</h3>
+      <p>实时汇总收入、支出、负债、在建项目数，AI自动生成月度经营摘要，老板随时掌握经营全局。</p>
+      <span class="tag">实时看板</span><span class="tag">AI摘要</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">✅</div>
+      <h3>OA 审批流</h3>
+      <p>报销、采购、用款申请等审批流程线上化，手机端一键审批，告别纸质签字，流程可追溯。</p>
+      <span class="tag">移动审批</span><span class="tag">流程追溯</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h3>AI 自动化</h3>
+      <p>质保金到期自动钉钉提醒、月报自动生成、数据异常自动预警，减少人工重复操作。</p>
+      <span class="tag">智能提醒</span><span class="tag">自动报告</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Timeline -->
+<section class="section">
+  <div class="section-title">4 周交付计划</div>
+  <div class="section-sub">快速落地，边用边迭代</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-week">WEEK 1</div>
+      <div class="tl-title">基础搭建</div>
+      <div class="tl-desc">钉钉应用创建、多维表结构初始化（项目表/财务表/CRM表）、OA审批流配置、权限分组设置。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">WEEK 2</div>
+      <div class="tl-title">核心功能上线</div>
+      <div class="tl-desc">项目管理录入、收付款节点配置、质保金自动提醒、报销审批流测试上线。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">WEEK 3</div>
+      <div class="tl-title">CRM + 驾驶舱</div>
+      <div class="tl-desc">客户档案导入、商机跟进流程配置、老板驾驶舱看板搭建、月度报告自动生成测试。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">WEEK 4</div>
+      <div class="tl-title">验收 & 培训</div>
+      <div class="tl-desc">全员使用培训、数据迁移、系统验收，基础功能跑通后评估金蝶对接可行性。</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 紫金港达美装饰工程有限公司 · 数字化转型方案 by 钉钉 AI</p>
+  <p style="margin-top:8px;font-size:11px">Powered by DingTalk · Built with ❤️ for 杨玉霞</p>
+</footer>
+
+<script>
+  // 生成背景粒子点
+  const dots = document.getElementById('dots');
+  for(let i=0;i<60;i++){
+    const d = document.createElement('div');
+    d.className='dot';
+    d.style.left=Math.random()*100+'%';
+    d.style.top=Math.random()*100+'%';
+    d.style.opacity=Math.random()*0.5+0.1;
+    d.style.width=d.style.height=(Math.random()*3+1)+'px';
+    dots.appendChild(d);
+  }
+</script>
+</body>
+</html>
